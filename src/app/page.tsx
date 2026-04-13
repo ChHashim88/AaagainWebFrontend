@@ -68,7 +68,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-5xl md:text-7xl font-black tracking-tighter leading-tight uppercase"
           >
-            PREMIUM <br /> CURATED <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">ARCHIVES</span>
+            THE FINEST <br /> PRE-OWNED <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">FOOTWEAR</span>
           </motion.h1>
 
           <motion.p
