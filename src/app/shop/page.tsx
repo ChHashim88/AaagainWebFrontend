@@ -24,6 +24,8 @@ function ShopContent() {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [selectedTier, setSelectedTier] = useState<string>('');
+  const [showOnlySale, setShowOnlySale] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = useState<string>('');
 
   const availableBrands = Array.from(new Set(products.map(p => p.brand).filter(Boolean))) as string[];
   const availableTiers = Array.from(new Set(products.map(p => p.tier).filter(Boolean))) as string[];
@@ -51,6 +53,20 @@ function ShopContent() {
       setSelectedBrand(brand.replace(/\+/g, ' '));
     } else {
       setSelectedBrand('');
+    }
+
+    // 4. Process Sale specific deep link
+    if (searchParams.get('sale') === 'true') {
+      setShowOnlySale(true);
+    } else {
+      setShowOnlySale(false);
+    }
+
+    // 5. Process Sort deep link
+    if (searchParams.get('sort') === 'new') {
+      setSortOrder('new');
+    } else {
+      setSortOrder('');
     }
   }, [searchParams]);
 
@@ -95,7 +111,7 @@ function ShopContent() {
     setSelectedSizes(prev => prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]);
   };
 
-  const filteredProducts = products.filter(p => {
+  let filteredProducts = products.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
     const productCat = p.category?.name || 'Unisex';
     const matchesCategory = selectedCategories.length === 0 ||
@@ -105,8 +121,13 @@ function ShopContent() {
     const matchesSize = selectedSizes.length === 0 || (p.sizes && p.sizes.some((s: string) => selectedSizes.includes(s)));
     const matchesBrand = selectedBrand === '' || p.brand === selectedBrand;
     const matchesTier = selectedTier === '' || p.tier === selectedTier;
-    return matchesSearch && matchesCategory && matchesPrice && matchesSize && matchesBrand && matchesTier;
+    const matchesSale = !showOnlySale || isOnSale(p);
+    return matchesSearch && matchesCategory && matchesPrice && matchesSize && matchesBrand && matchesTier && matchesSale;
   });
+
+  if (sortOrder === 'new') {
+    filteredProducts = filteredProducts.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+  }
 
   return (
     <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 pt-6 pb-12">

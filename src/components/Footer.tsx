@@ -22,9 +22,9 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-semibold tracking-wider uppercase">Shop</h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">New Arrivals</a></li>
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">Best Sellers</a></li>
-              <li><a href="#" className="hover:text-cyan-400 transition-colors">Sale</a></li>
+              <li><Link href="/shop?sort=new" className="hover:text-cyan-400 transition-colors">New Arrivals</Link></li>
+              <li><Link href="/#trending" className="hover:text-cyan-400 transition-colors">Best Sellers</Link></li>
+              <li><Link href="/shop?sale=true" className="hover:text-cyan-400 transition-colors">Sale</Link></li>
             </ul>
           </div>
           <div>

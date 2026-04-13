@@ -117,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* Featured Collection Strip */}
-      <section className="w-full bg-black py-20 border-y border-white/5">
+      <section id="trending" className="w-full bg-black py-20 border-y border-white/5">
         <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 text-center">
           <h2 className="text-3xl font-bold tracking-tight mb-12 uppercase border-b border-border/50 inline-block pb-2">Trending Models</h2>
 
