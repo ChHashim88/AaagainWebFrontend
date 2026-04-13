@@ -62,7 +62,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }
         
         prevTotalOrdersRef.current = currentTotal;
-      } catch (error) {}
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          logout();
+          router.push('/login');
+        }
+      }
     };
 
     fetchStats();
