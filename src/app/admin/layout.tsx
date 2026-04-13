@@ -130,7 +130,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <aside className="w-64 border-r border-white/10 hidden md:flex flex-col shrink-0">
         <div className="h-16 flex items-center px-6 border-b border-white/10 shrink-0">
           <span className="text-xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-            AERO ADMIN
+            AAAGAIN ADMIN
           </span>
         </div>
         <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
