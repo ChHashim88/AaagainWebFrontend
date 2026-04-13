@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
-  reactCompiler: true,
   images: {
-    unoptimized: true,
-  },
+    dangerouslyAllowLocalIP: true,
+  }
 };
-
-export default nextConfig;
