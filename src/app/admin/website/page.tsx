@@ -422,11 +422,15 @@ export default function WebsiteHandlePage() {
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 outline-none text-white focus:border-rose-400 font-bold transition-all"
               >
                 <option value="" disabled className="bg-black text-muted-foreground">--- Choose Physical Inv. ---</option>
-                {products.filter(p => p.stock > 0).map(p => (
-                  <option key={p.id} value={p.id} className="bg-black">
-                    {p.name} - Rs {p.price} [Inventory: {p.stock}]
-                  </option>
-                ))}
+                {products.filter(p => p.stock > 0).map(p => {
+                  const isSaleActive = p.salePrice && p.saleStartDate && p.saleEndDate && new Date() >= new Date(p.saleStartDate) && new Date() <= new Date(p.saleEndDate);
+                  const displayPrice = isSaleActive ? p.salePrice : p.price;
+                  return (
+                    <option key={p.id} value={p.id} className="bg-black">
+                      {p.name} - Rs {displayPrice} {isSaleActive ? '(ON SALE)' : ''} [Inventory: {p.stock}]
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
