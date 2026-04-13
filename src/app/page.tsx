@@ -66,9 +66,9 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-5xl md:text-7xl font-black tracking-tighter leading-tight"
+            className="text-5xl md:text-7xl font-black tracking-tighter leading-tight uppercase"
           >
-            THE FUTURE <br /> OF <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">FOOTWEAR</span>
+            PREMIUM <br /> CURATED <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">ARCHIVES</span>
           </motion.h1>
 
           <motion.p
@@ -77,7 +77,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto md:mx-0"
           >
-            Experience gravity-defying comfort with our signature neon-laced smart sneakers. Built for performance, designed for tomorrow.
+            Access exclusive, pre-owned pairs from exactly the brands you love. Carefully curated, strictly authenticated, and delivered with premium quality without the retail markup.
           </motion.p>
 
           <motion.div
