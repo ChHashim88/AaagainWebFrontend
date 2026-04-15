@@ -6,6 +6,7 @@ import { useAdminAuthStore } from '@/store/useAdminAuthStore';
 import { toast } from 'sonner';
 import { Save, Globe, Plus, Trash2, Edit2, X, Tag } from 'lucide-react';
 import Image from 'next/image';
+import { isOnSale } from '@/utils/sale';
 
 export default function WebsiteHandlePage() {
   const [products, setProducts] = useState<any[]>([]);
@@ -423,11 +424,11 @@ export default function WebsiteHandlePage() {
               >
                 <option value="" disabled className="bg-black text-muted-foreground">--- Choose Physical Inv. ---</option>
                 {products.filter(p => p.stock > 0).map(p => {
-                  const isSaleActive = p.salePrice && p.saleStartDate && p.saleEndDate && new Date() >= new Date(p.saleStartDate) && new Date() <= new Date(p.saleEndDate);
-                  const displayPrice = isSaleActive ? p.salePrice : p.price;
+                  const activeSale = isOnSale(p);
+                  const displayPrice = activeSale ? p.salePrice : p.price;
                   return (
                     <option key={p.id} value={p.id} className="bg-black">
-                      {p.name} - Rs {displayPrice} {isSaleActive ? '(ON SALE)' : ''} [Inventory: {p.stock}]
+                      {p.name} - Rs {displayPrice} {activeSale ? '(ON SALE)' : ''} [Inventory: {p.stock}]
                     </option>
                   );
                 })}
