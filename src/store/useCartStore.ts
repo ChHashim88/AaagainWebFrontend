@@ -120,7 +120,7 @@ export const useCartStore = create<CartStore>()(
       }
     }),
     {
-      name: 'aaagain-cart',
+      name: 'bazarbeats-cart',
     }
   )
 );

@@ -9,8 +9,6 @@ import { useCartStore } from '@/store/useCartStore';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { isOnSale } from '@/utils/sale';
-import { useAuthStore } from '@/store/useAuthStore';
-import { Star, MessageSquare } from 'lucide-react';
 
 export default function ProductPage() {
   const params = useParams();
@@ -25,38 +23,6 @@ export default function ProductPage() {
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState('10');
   const [sizeSystem, setSizeSystem] = useState('');
-
-  const user = useAuthStore(state => state.user);
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
-  const [submittingReview, setSubmittingReview] = useState(false);
-
-  const averageRating = product?.reviews?.length ? (product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) / product.reviews.length).toFixed(1) : 0;
-
-  const submitReview = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) {
-      toast.error('You must be logged in to leave a review');
-      router.push('/login');
-      return;
-    }
-    setSubmittingReview(true);
-    try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${product.id}/reviews`, { rating, comment }, {
-        headers: { Authorization: `Bearer ${user.token}` }
-      });
-      toast.success('Review submitted successfully!');
-      setComment('');
-      setRating(5);
-      // Refresh product data dynamically to fetch the newly mapped review to client
-      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${product.id}`);
-      setProduct(data);
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to submit review');
-    } finally {
-      setSubmittingReview(false);
-    }
-  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -187,19 +153,6 @@ export default function ProductPage() {
               <p className="text-sm text-muted-foreground uppercase tracking-widest border border-white/10 px-3 py-1 rounded-sm">{product.category?.name || 'Exclusive'}</p>
             </div>
             <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-2">{product.name}</h1>
-            
-            {/* Average Rating Display */}
-            <div className="flex items-center gap-4 mb-6">
-               <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`w-5 h-5 ${i < Math.round(Number(averageRating)) ? 'fill-current' : 'text-white/20'}`} />
-                  ))}
-               </div>
-               <span className="text-muted-foreground font-medium text-sm">
-                 {product?.reviews?.length || 0} Reviews ({averageRating})
-               </span>
-            </div>
-
             {isOnSale(product) ? (
               <div className="flex items-baseline gap-4 mb-6">
                 <span className="bg-purple-500 text-black text-xs font-black uppercase tracking-widest px-3 py-1 rounded shadow-[0_0_15px_rgba(168,85,247,0.3)]">SALE</span>
@@ -267,89 +220,6 @@ export default function ProductPage() {
               );
             })()}
           </motion.div>
-        </div>
-      </div>
-
-      {/* Review System Section */}
-      <div className="mt-24 max-w-4xl mx-auto w-full border-t border-white/10 pt-16">
-        <h2 className="text-3xl font-black uppercase tracking-widest mb-8 flex items-center gap-3">
-          <MessageSquare className="w-8 h-8 text-cyan-400" /> Customer Reviews
-        </h2>
-        
-        {/* Reviews List */}
-        {(!product.reviews || product.reviews.length === 0) ? (
-           <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center text-muted-foreground mb-12 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-              <Star className="w-12 h-12 text-white/20 mx-auto mb-4" />
-              <p>No reviews yet. Be the first to share your thoughts!</p>
-           </div>
-        ) : (
-           <div className="space-y-6 mb-12">
-             {product.reviews.map((review: any) => (
-               <div key={review.id} className="bg-white/5 border border-white/10 rounded-2xl p-6 transition-colors hover:border-cyan-400/30">
-                 <div className="flex items-center justify-between mb-4">
-                   <p className="font-bold text-white uppercase tracking-wider">{review.user?.name || 'Anonymous'}</p>
-                   <p className="text-xs text-muted-foreground">{new Date(review.createdAt).toLocaleDateString()}</p>
-                 </div>
-                 <div className="flex text-yellow-400 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'fill-current' : 'text-white/20'}`} />
-                    ))}
-                 </div>
-                 <p className="text-white/80 leading-relaxed text-sm">{review.comment}</p>
-               </div>
-             ))}
-           </div>
-        )}
-
-        {/* Submit Review Form */}
-        <div className="bg-[#050505] border border-cyan-400/20 rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(34,211,238,0.05)] relative overflow-hidden">
-           <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400/10 blur-3xl -mr-32 -mt-32 pointer-events-none rounded-full" />
-           <h3 className="text-lg sm:text-xl font-bold uppercase tracking-widest mb-6 relative z-10 text-white">Write a Review</h3>
-           
-           {!user ? (
-             <div className="bg-white/5 border border-white/10 p-6 rounded-xl text-center relative z-10">
-               <p className="mb-4 text-muted-foreground text-sm uppercase tracking-wider font-bold">You must be logged in to leave a review.</p>
-               <button onClick={() => router.push('/login')} className="px-8 py-3 bg-cyan-400/20 text-cyan-400 font-bold uppercase tracking-widest rounded-lg hover:bg-cyan-400 hover:text-black transition-all">Log In Now</button>
-             </div>
-           ) : (
-             <form onSubmit={submitReview} className="relative z-10">
-               <div className="mb-6 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-                 <label className="block text-sm text-neutral-400 font-bold uppercase tracking-[0.2em]">Your Rating</label>
-                 <div className="flex gap-2">
-                   {[1, 2, 3, 4, 5].map((star) => (
-                     <button
-                       type="button"
-                       key={star}
-                       onClick={() => setRating(star)}
-                       className={`p-2.5 rounded-lg transition-all transform hover:scale-110 ${rating >= star ? 'text-yellow-400 bg-yellow-400/10 border border-yellow-400/30 shadow-[0_0_15px_rgba(250,204,21,0.2)]' : 'text-white/20 hover:text-white/50 bg-white/5 border border-white/10'}`}
-                     >
-                       <Star className="w-6 h-6 fill-current" />
-                     </button>
-                   ))}
-                 </div>
-               </div>
-               
-               <div className="mb-6">
-                 <label className="block text-sm text-neutral-400 font-bold uppercase tracking-[0.2em] mb-4">Your Comment</label>
-                 <textarea
-                   value={comment}
-                   onChange={(e) => setComment(e.target.value)}
-                   required
-                   rows={4}
-                   className="w-full bg-black/80 border border-white/10 rounded-xl px-5 py-4 text-white focus:border-cyan-400 outline-none transition-colors backdrop-blur-sm"
-                   placeholder="Share your thoughts about this product's quality, fit, and comfort..."
-                 />
-               </div>
-               
-               <button
-                 type="submit"
-                 disabled={submittingReview}
-                 className="w-full sm:w-auto px-10 py-4 bg-cyan-400 hover:bg-cyan-300 text-black rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-               >
-                 {submittingReview ? 'Submitting...' : 'Post Review'}
-               </button>
-             </form>
-           )}
         </div>
       </div>
 

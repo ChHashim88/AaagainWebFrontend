@@ -28,7 +28,7 @@ export default function OrderSuccessPage() {
       
       <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4 text-center">Order Confirmed</h1>
       <p className="text-muted-foreground text-center mb-12 max-w-lg">
-        Thank you for shopping with Aaagain! Your futuristic footwear is being prepared for dispatch. 
+        Thank you for shopping with Bazar Beats! Your futuristic footwear is being prepared for dispatch. 
         A confirmation email has been sent to <span className="text-white font-bold">{order.shippingAddress?.email}</span>.
       </p>
 
@@ -62,7 +62,7 @@ export default function OrderSuccessPage() {
                     <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${item.product?.images?.[0] || ''}`} className="w-full h-full object-contain mix-blend-screen" alt={item.product?.name || "Product"} />
                   </div>
                   <div>
-                    <p className="font-bold text-sm tracking-wide">{item.product?.name || 'Aaagain Sneaker'}</p>
+                    <p className="font-bold text-sm tracking-wide">{item.product?.name || 'Bazar Beats Sneaker'}</p>
                     <p className="text-xs text-muted-foreground mt-1">Qty: {item.quantity} | Size: {item.size || 'N/A'}</p>
                   </div>
                 </div>

@@ -69,7 +69,7 @@ export default function WebsiteHandlePage() {
       setEasypaisaNumber(data.easypaisaNumber || '');
       setEnableJazzcash(data.enableJazzcash !== false);
       setJazzcashNumber(data.jazzcashNumber || '');
-      setEmailSupport(data.emailSupport || 'support@aaagain.com');
+      setEmailSupport(data.emailSupport || 'support@bazarbeats.com');
       setDirectLine(data.directLine || '+1 (800) 555-0199');
       setHeadquarters(data.headquarters || 'Neon District');
       setHeadquartersAddress(data.headquartersAddress || 'Cyber City, CC 92041, Sector 7.');
@@ -390,7 +390,7 @@ export default function WebsiteHandlePage() {
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 sm:gap-8">
           <div className="space-y-4 p-4 sm:p-5 rounded-xl border bg-white/5 border-white/10">
             <h4 className="font-bold text-cyan-400 uppercase tracking-wider text-sm">Email Support</h4>
-            <input type="text" value={emailSupport} onChange={(e) => setEmailSupport(e.target.value)} className="w-full bg-black border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-cyan-400 outline-none text-white font-mono" placeholder="support@aaagain.com" />
+            <input type="text" value={emailSupport} onChange={(e) => setEmailSupport(e.target.value)} className="w-full bg-black border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-cyan-400 outline-none text-white font-mono" placeholder="support@bazarbeats.com" />
           </div>
           <div className="space-y-4 p-4 sm:p-5 rounded-xl border bg-white/5 border-white/10">
             <h4 className="font-bold text-cyan-400 uppercase tracking-wider text-sm">Direct Line</h4>

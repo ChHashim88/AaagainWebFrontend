@@ -49,7 +49,7 @@ export default function ContactPage() {
     {
       icon: <Mail className="w-6 h-6 text-cyan-400" />,
       title: "Email Support",
-      value: settings?.emailSupport || "support@aaagain.com",
+      value: settings?.emailSupport || "support@bazarbeats.com",
       description: "Our team aims to respond within 24 hours.",
       bgClass: "group-hover:bg-cyan-500/10",
       borderClass: "group-hover:border-cyan-500/30",

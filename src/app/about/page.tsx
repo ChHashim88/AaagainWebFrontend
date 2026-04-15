@@ -35,7 +35,7 @@ export default function AboutPage() {
             About <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Us</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground font-medium leading-relaxed">
-            At Aaagain, we believe style shouldn’t come with a high price tag.
+            At Bazar Beats, we believe style shouldn’t come with a high price tag.
           </p>
         </motion.div>
 
@@ -74,7 +74,7 @@ export default function AboutPage() {
               Our goal is simple — to make branded footwear accessible without compromising on style, comfort, or quality.
             </p>
             <p>
-              Whether you're looking for everyday wear or standout pieces, <strong className="text-white font-bold">Aaagain</strong> gives you a second chance to own the brands you love — for less.
+              Whether you're looking for everyday wear or standout pieces, <strong className="text-white font-bold">Bazar Beats</strong> gives you a second chance to own the brands you love — for less.
             </p>
           </motion.div>
         </div>

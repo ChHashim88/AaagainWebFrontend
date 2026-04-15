@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-col items-start">
             <Link href="/" className="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-              Aaagain
+              Bazar Beats
             </Link>
             <p className="mt-4 text-sm text-muted-foreground w-3/4">
               Building the future of footwear. Step into a new dimension of performance, comfort, and style.
@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/30 text-xs">
-            &copy; {new Date().getFullYear()} Aaagain, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} Bazar Beats, Inc. All rights reserved.
           </p>
         </div>
       </div>
