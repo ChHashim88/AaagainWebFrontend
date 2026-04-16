@@ -23,9 +23,9 @@ export default function AdminProducts() {
   const fetchProducts = async () => {
     try {
       const [{ data: pData }, { data: cData }, { data: bData }] = await Promise.all([
-        axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/products', { headers: { Authorization: `Bearer ${user?.token}` } }),
-        axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/categories'),
-        axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/brands')
+        axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/products', { headers: { Authorization: `Bearer ${user?.token}` } }),
+        axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/categories'),
+        axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/brands')
       ]);
       setProducts(pData);
       setCategories(cData);
@@ -48,7 +48,7 @@ export default function AdminProducts() {
     setUploading(true);
 
     try {
-      const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/upload', uploadData);
+      const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/upload', uploadData);
       setFormData(prev => ({ ...prev, imageUrls: [...prev.imageUrls, data] }));
       toast.success('Image uploaded securely!');
     } catch (error) {
@@ -62,7 +62,7 @@ export default function AdminProducts() {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this product?')) return;
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/products/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       toast.success('Product deleted');
@@ -98,12 +98,12 @@ export default function AdminProducts() {
       };
 
       if (isEditing) {
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${formData.id}`, payload, {
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/products/${formData.id}`, payload, {
           headers: { Authorization: `Bearer ${user?.token}` }
         });
         toast.success('Product updated');
       } else {
-        await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/products', payload, {
+        await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/products', payload, {
           headers: { Authorization: `Bearer ${user?.token}` }
         });
         toast.success('Product created');
@@ -294,7 +294,7 @@ export default function AdminProducts() {
                       <div className="flex gap-4 mt-6 overflow-x-auto pb-2 items-center">
                         {formData.imageUrls.map((url, idx) => (
                           <div key={idx} className="relative w-28 h-28 shrink-0 rounded-xl bg-black border border-white/10 overflow-hidden group shadow-lg">
-                            <Image src={url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${url}`} alt="Preview" fill sizes="112px" className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 mix-blend-screen" />
+                            <Image src={url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${url}`} alt="Preview" fill sizes="112px" className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 mix-blend-screen" />
                             <button type="button" onClick={() => removeImage(idx)} className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer z-20 shadow-md hover:bg-red-400">
                               <X className="w-3.5 h-3.5" />
                             </button>

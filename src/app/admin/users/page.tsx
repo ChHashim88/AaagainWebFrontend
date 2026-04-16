@@ -25,7 +25,7 @@ export default function UsersAdminPage() {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/users', {
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/users', {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       setUsers(data);
@@ -50,7 +50,7 @@ export default function UsersAdminPage() {
     setLoadingOrders(true);
     setUserOrders([]);
     try {
-      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/orders/user/${targetUser.id}`, {
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/orders/user/${targetUser.id}`, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       setUserOrders(data);
@@ -65,7 +65,7 @@ export default function UsersAdminPage() {
     e.preventDefault();
     setIsUpdating(true);
     try {
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/users/${editingUser.id}`, editForm, {
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/users/${editingUser.id}`, editForm, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       toast.success('User updated successfully!');
@@ -81,7 +81,7 @@ export default function UsersAdminPage() {
   const handleDelete = async (id: string) => {
     if (!window.confirm('WARNING: Are you absolutely sure you want to permanently delete this user?')) return;
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/users/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/users/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       toast.success('User has been purged from the system.');

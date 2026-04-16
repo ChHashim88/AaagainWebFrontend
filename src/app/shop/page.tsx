@@ -73,7 +73,7 @@ function ShopContent() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/products');
+        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/products');
         setProducts(data);
       } catch (error) {
         console.error('Failed to fetch products');
@@ -87,7 +87,7 @@ function ShopContent() {
   const getImageUrl = (url: string | undefined) => {
     if (!url) return 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=800';
     if (url.startsWith('http')) return url;
-    return `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${url}`;
+    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${url}`;
   };
 
   const handleAddToCart = (e: React.MouseEvent, product: any) => {

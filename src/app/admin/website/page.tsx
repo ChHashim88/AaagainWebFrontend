@@ -50,7 +50,7 @@ export default function WebsiteHandlePage() {
 
   const fetchBrands = async () => {
     try {
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/brands');
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/brands');
       setBrands(data);
     } catch (error) {
       console.error('Failed to load brands');
@@ -59,7 +59,7 @@ export default function WebsiteHandlePage() {
 
   const fetchSettings = async () => {
     try {
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/settings');
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/settings');
       setDeliveryFeeType(data.deliveryFeeType || 'FIXED');
       setDeliveryFeeValue(data.deliveryFeeValue || 0);
       setCodFeeType(data.codFeeType || 'FIXED');
@@ -80,7 +80,7 @@ export default function WebsiteHandlePage() {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/products');
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/products');
       setProducts(data);
       
       const trending = data.filter((p: any) => p.isTrending).map((p: any) => p.id);
@@ -112,8 +112,8 @@ export default function WebsiteHandlePage() {
     try {
       const config = { headers: { Authorization: `Bearer ${user?.token}` } };
       await Promise.all([
-        axios.put((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/products/trending', { productIds: selectedIds }, config),
-        axios.put((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/settings', {
+        axios.put((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/products/trending', { productIds: selectedIds }, config),
+        axios.put((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/settings', {
           deliveryFeeType,
           deliveryFeeValue,
           codFeeType,
@@ -139,7 +139,7 @@ export default function WebsiteHandlePage() {
     if (!posProductId || !posSize) return;
     try {
       const config = { headers: { Authorization: `Bearer ${user?.token}` } };
-      await axios.post((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/orders/physical', { productId: posProductId, size: posSize }, config);
+      await axios.post((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/orders/physical', { productId: posProductId, size: posSize }, config);
       toast.success('Physical Sale tracked successfully! Native stock decremented.');
       fetchProducts(); // Refresh immediately to show accurate remaining stock
       setPosProductId('');
@@ -152,14 +152,14 @@ export default function WebsiteHandlePage() {
   const getImageUrl = (url: string | undefined) => {
     if (!url) return 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=800';
     if (url.startsWith('http')) return url;
-    return `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${url}`;
+    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${url}`;
   };
 
   const handleAddBrand = async () => {
     if (!newBrandName.trim()) return;
     try {
       const config = { headers: { Authorization: `Bearer ${user?.token}` } };
-      await axios.post((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/brands', { name: newBrandName }, config);
+      await axios.post((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/brands', { name: newBrandName }, config);
       toast.success('Brand added');
       setNewBrandName('');
       fetchBrands();
@@ -172,7 +172,7 @@ export default function WebsiteHandlePage() {
     if (!editingBrand || !editingBrand.name.trim()) return;
     try {
       const config = { headers: { Authorization: `Bearer ${user?.token}` } };
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/brands/${editingBrand.id}`, { name: editingBrand.name }, config);
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/brands/${editingBrand.id}`, { name: editingBrand.name }, config);
       toast.success('Brand updated and products synced!');
       setEditingBrand(null);
       fetchBrands();
@@ -185,7 +185,7 @@ export default function WebsiteHandlePage() {
     if (!confirm('Delete this brand? Products using this brand will keep the string value unless updated.')) return;
     try {
       const config = { headers: { Authorization: `Bearer ${user?.token}` } };
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/brands/${id}`, config);
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/brands/${id}`, config);
       toast.success('Brand deleted');
       fetchBrands();
     } catch (error: any) {

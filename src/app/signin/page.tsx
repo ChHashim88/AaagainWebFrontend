@@ -55,7 +55,7 @@ export default function SignInPage() {
     setIsLoading(true);
     try {
       if (isLoginView) {
-        const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/users/login', { email, password });
+        const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/users/login', { email, password });
         
         if (data.role === 'ADMIN') {
           toast.error('Admin restricted: Please use the official Admin Portal (/login).');
@@ -67,7 +67,7 @@ export default function SignInPage() {
         toast.success('Successfully deployed back to Command Center.');
         router.push('/profile');
       } else {
-        const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/users', { name, email, password });
+        const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/users', { name, email, password });
         login(data);
         toast.success(`Account created successfully! Welcome, ${data.name}.`);
         router.push('/profile');

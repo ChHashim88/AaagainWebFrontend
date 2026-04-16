@@ -25,7 +25,7 @@ export default function ProfilePage() {
     const fetchOrders = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/orders/myorders', config);
+        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/orders/myorders', config);
         setOrders(data);
       } catch (error) {
         console.error('Failed to fetch orders', error);

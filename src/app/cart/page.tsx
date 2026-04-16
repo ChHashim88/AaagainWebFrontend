@@ -17,7 +17,7 @@ export default function CartPage() {
 
     try {
       // Robustly ping real-time database stock to prevent ghost-item overrides
-      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${item.id}`);
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/products/${item.id}`);
       const liveStock = data.stock;
 
       if (item.quantity >= liveStock) {

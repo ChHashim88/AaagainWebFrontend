@@ -28,8 +28,8 @@ export default function ProductPage() {
     const fetchProduct = async () => {
       try {
         const [{ data }, { data: settingsData }] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products/${params.id}`),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/settings`)
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/products/${params.id}`),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/settings`)
         ]);
         setProduct(data);
         if (data.sizes?.length > 0) setSelectedSize(data.sizes[0]);
@@ -46,7 +46,7 @@ export default function ProductPage() {
   const getImageUrl = (url: string | undefined) => {
     if (!url) return 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=800';
     if (url.startsWith('http')) return url;
-    return `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${url}`;
+    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${url}`;
   };
 
   const handleAddToCart = () => {

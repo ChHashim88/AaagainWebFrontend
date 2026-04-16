@@ -28,7 +28,7 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         if (!user?.token) return;
-        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/orders/stats', {
+        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/orders/stats', {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         setStats(data);

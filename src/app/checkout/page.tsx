@@ -58,7 +58,7 @@ export default function CheckoutPage() {
 
   const fetchSettings = async () => {
     try {
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/settings');
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/settings');
       setSettings(data);
     } catch (error) {
       console.error('Failed to load settings');
@@ -126,7 +126,7 @@ export default function CheckoutPage() {
       
       const optimizedPaymentMethod = transactionId ? `${paymentMethod} (TID: ${transactionId})` : paymentMethod;
 
-      const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/orders', {
+      const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/orders', {
         orderItems: items.map(i => ({ productId: i.id, quantity: i.quantity, price: i.price, size: i.size, color: i.color })),
         shippingAddress,
         paymentMethod: optimizedPaymentMethod,

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import axios from 'axios';
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api';
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api';
 
 interface CartItem {
   id: string; // product id normally

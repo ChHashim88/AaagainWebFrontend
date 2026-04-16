@@ -21,7 +21,7 @@ export default function AdminOrders() {
   const fetchOrders = async () => {
     try {
       if (!user?.token) return;
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/orders', {
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/orders', {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       setOrders(data);
@@ -39,11 +39,11 @@ export default function AdminOrders() {
       const config = { headers: { Authorization: `Bearer ${user?.token}` } };
       
       if (newStatus !== statusModalOrder.status) {
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/orders/${statusModalOrder.id}/status`, { status: newStatus }, config);
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/orders/${statusModalOrder.id}/status`, { status: newStatus }, config);
       }
       
       if (newIsPaid !== statusModalOrder.isPaid) {
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/orders/${statusModalOrder.id}/payment`, { isPaid: newIsPaid }, config);
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/orders/${statusModalOrder.id}/payment`, { isPaid: newIsPaid }, config);
       }
 
       toast.success('Order metrics successfully updated!');
@@ -57,7 +57,7 @@ export default function AdminOrders() {
   const handleDeleteClick = async (id: string) => {
     if (window.confirm('CRITICAL WARNING: Are you sure you want to literally destroy this entire order?\n\nThis will cleanly refund and restore all of the physical unit stock back to your warehouse!')) {
       try {
-        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/orders/${id}`, {
+        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/orders/${id}`, {
           headers: { Authorization: `Bearer ${user?.token}` }
         });
         toast.success('Order completely destroyed and stock automatically restored!');
@@ -70,7 +70,7 @@ export default function AdminOrders() {
 
   const updateStatus = async (id: string, status: string) => {
     try {
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/orders/${id}/status`, { status }, {
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/orders/${id}/status`, { status }, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       toast.success(`Order marked as ${status}`);
@@ -247,7 +247,7 @@ export default function AdminOrders() {
                       <div className="flex items-center gap-5">
                         <div className="w-16 h-16 bg-white/5 rounded-xl p-2 shrink-0 border border-white/5">
                           {item.product?.images?.[0] ? (
-                             <img src={item.product.images[0].startsWith('http') ? item.product.images[0] : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${item.product.images[0]}`} className="w-full h-full object-contain mix-blend-screen" alt="Thumb" />
+                             <img src={item.product.images[0].startsWith('http') ? item.product.images[0] : `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${item.product.images[0]}`} className="w-full h-full object-contain mix-blend-screen" alt="Thumb" />
                           ) : (
                              <div className="w-full h-full bg-white/5 rounded" />
                           )}

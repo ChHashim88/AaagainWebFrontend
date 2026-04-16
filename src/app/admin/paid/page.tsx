@@ -18,7 +18,7 @@ export default function PaidDetailsPage() {
   const fetchPaidOrders = async () => {
     try {
       if (!user?.token) return;
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/orders', {
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/orders', {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       // Filter strictly for PAID orders

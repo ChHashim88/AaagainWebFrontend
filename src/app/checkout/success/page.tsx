@@ -59,7 +59,7 @@ export default function OrderSuccessPage() {
               <div key={idx} className="flex items-center justify-between bg-black/40 p-4 rounded-2xl border border-white/5">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 bg-white/10 rounded-xl overflow-hidden p-1 flex items-center justify-center shrink-0">
-                    <img src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${item.product?.images?.[0] || ''}`} className="w-full h-full object-contain mix-blend-screen" alt={item.product?.name || "Product"} />
+                    <img src={`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${item.product?.images?.[0] || ''}`} className="w-full h-full object-contain mix-blend-screen" alt={item.product?.name || "Product"} />
                   </div>
                   <div>
                     <p className="font-bold text-sm tracking-wide">{item.product?.name || 'Bazar Beats Sneaker'}</p>

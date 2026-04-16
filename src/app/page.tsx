@@ -24,7 +24,7 @@ export default function Home() {
   useEffect(() => {
     const fetchTrending = async () => {
       try {
-        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/products');
+        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/products');
         // Prefer explicit trending items configured in Admin Handle; fallback to newest 3 if store unconfigured
         const explicitTrending = data.filter((p: any) => p.isTrending);
         setTrending(explicitTrending.length > 0 ? explicitTrending.slice(0, 3) : data.slice(0, 3));
@@ -37,7 +37,7 @@ export default function Home() {
 
     const fetchBrands = async () => {
       try {
-        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/brands');
+        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/brands');
         setBrands(data);
       } catch (error) {
         console.error('Failed to fetch brands');
@@ -51,7 +51,7 @@ export default function Home() {
   const getImageUrl = (url: string | undefined) => {
     if (!url) return 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=800';
     if (url.startsWith('http')) return url;
-    return `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${url}`;
+    return `${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}${url}`;
   };
 
   return (

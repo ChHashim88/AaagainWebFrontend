@@ -20,7 +20,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/users/login', { email, password });
+      const { data } = await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/users/login', { email, password });
       
       if (data.role !== 'ADMIN') {
         toast.error('Unauthorized Access! Master Admin credentials required.');

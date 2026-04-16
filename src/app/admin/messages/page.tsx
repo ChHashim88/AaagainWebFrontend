@@ -31,7 +31,7 @@ export default function AdminMessagesPage() {
   const fetchMessages = async () => {
     if (!user?.token) return;
     try {
-      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/messages', {
+      const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/messages', {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       setMessages(data);
@@ -44,7 +44,7 @@ export default function AdminMessagesPage() {
 
   const markAsRead = async (id: string) => {
     try {
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/messages/${id}/read`, {}, {
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/messages/${id}/read`, {}, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       setMessages(messages.map(m => m.id === id ? { ...m, isRead: true } : m));
@@ -61,7 +61,7 @@ export default function AdminMessagesPage() {
     if (!confirm('Are you sure you want to delete this message?')) return;
     
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/messages/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com'}/api/messages/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       setMessages(messages.filter(m => m.id !== id));

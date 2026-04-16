@@ -14,7 +14,7 @@ export default function ContactPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '') + '/api/settings');
+        const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || (process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '') + '/api/settings');
         setSettings(data);
       } catch (error) {
         console.error('Failed to load settings');
@@ -28,7 +28,7 @@ export default function ContactPage() {
     setIsSubmitting(true);
     
     try {
-      await axios.post((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/messages', formData);
+      await axios.post((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/messages', formData);
       setIsSubmitting(false);
       setIsSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
