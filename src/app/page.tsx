@@ -125,56 +125,60 @@ export default function Home() {
             <p className="text-muted-foreground">Store empty. Check back when admin adds sneakers!</p>
           ) : (
             <>
-              {/* Desktop Grid View */}
-              <div className="hidden lg:grid grid-cols-3 gap-8">
+              {/* Unified Responsive Grid View */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
                 {trending.map((product, index) => (
-                  <Link href={`/product/${product.id}`} key={product.id} className="group cursor-pointer">
+                  <Link 
+                    href={`/product/${product.id}`} 
+                    key={product.id} 
+                    className={`group cursor-pointer ${index === 2 ? 'max-lg:hidden' : ''}`}
+                  >
                     <motion.div
                       whileHover={{ y: -5 }}
-                      className="relative bg-[#050505] border border-white/10 hover:border-cyan-400/30 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[450px]"
+                      className="relative bg-[#050505] border border-white/10 hover:border-cyan-400/30 rounded-[1.25rem] sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[280px] sm:h-[450px]"
                     >
                       {/* Magical background gradient that pulses subtly */}
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-cyan-400/20 transition-colors duration-700" />
+                      <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-cyan-400/10 rounded-full blur-3xl -mr-12 -mt-12 sm:-mr-16 sm:-mt-16 group-hover:bg-cyan-400/20 transition-colors duration-700" />
 
-                      <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-                        <span className="bg-cyan-500 text-black text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded shadow-[0_0_15px_rgba(34,211,238,0.5)] w-max">Trending</span>
+                      <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-20">
+                        <span className="bg-cyan-500 text-black text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded shadow-[0_0_15px_rgba(34,211,238,0.5)] w-max">Trending</span>
                         {isOnSale(product) && (
-                          <span className="bg-purple-500 text-black text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded shadow-[0_0_15px_rgba(168,85,247,0.5)] w-max">SALE</span>
+                          <span className="bg-purple-500 text-black text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded shadow-[0_0_15px_rgba(168,85,247,0.5)] w-max">SALE</span>
                         )}
                       </div>
 
-                      <div className="relative h-3/5 w-full bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center p-6">
+                      <div className="relative h-[60%] sm:h-3/5 w-full bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center p-4 sm:p-6">
                         <Image
                           src={getImageUrl(product.images?.[0])}
                           alt={product.name}
                           fill
-                          sizes="(max-width: 1024px) 33vw, 33vw"
-                          className="object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-700 z-10 p-4"
+                          sizes="(max-width: 1024px) 50vw, 33vw"
+                          className="object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-700 z-10 p-2 sm:p-4"
                         />
                       </div>
 
                       {/* Content block inside the card */}
-                      <div className="relative z-20 flex-1 bg-black/60 backdrop-blur-md border-t border-white/5 p-5 flex flex-col justify-between">
+                      <div className="relative z-20 flex-1 bg-black/60 backdrop-blur-md border-t border-white/5 p-3 sm:p-5 flex flex-col justify-between">
                         <div>
-                          <h3 className="text-lg font-black truncate group-hover:text-cyan-400 transition-colors tracking-tight text-white">{product.name}</h3>
-                          <div className="flex items-center gap-2 mt-2 flex-wrap">
-                            {product.brand && <span className="text-[10px] font-bold uppercase tracking-widest text-[#888]">{product.brand}</span>}
-                            {product.tier && <span className="text-[10px] font-bold uppercase text-purple-400 border border-purple-500/30 bg-purple-500/10 px-1.5 py-0.5 rounded">{product.tier}</span>}
-                            {product.colors && product.colors.length > 0 && <span className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 px-1.5 py-0.5 rounded truncate max-w-[120px]">{product.colors.join(' / ')}</span>}
+                          <h3 className="text-sm sm:text-lg font-black truncate group-hover:text-cyan-400 transition-colors tracking-tight text-white">{product.name}</h3>
+                          <div className="flex items-center gap-1.5 sm:gap-2 mt-1 sm:mt-2 flex-wrap">
+                            {product.brand && <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-[#888]">{product.brand}</span>}
+                            {product.tier && <span className="text-[8px] sm:text-[10px] font-bold uppercase text-purple-400 border border-purple-500/30 bg-purple-500/10 px-1.5 py-0.5 rounded">{product.tier}</span>}
+                            {product.colors && product.colors.length > 0 && <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 px-1.5 py-0.5 rounded truncate max-w-[80px] sm:max-w-[120px]">{product.colors.join(' / ')}</span>}
                           </div>
                         </div>
-                        <div className="flex justify-between items-end mt-4">
-                          <div className="flex flex-col items-start max-w-[70%]">
+                        <div className="flex justify-between items-end mt-2 sm:mt-4">
+                          <div className="flex flex-col items-start max-w-[75%] sm:max-w-[70%]">
                             {isOnSale(product) ? (
-                              <div className="flex items-baseline gap-2 truncate">
-                                <span className="font-mono font-bold text-purple-400 text-lg">Rs {Number(product.salePrice).toFixed(2)}</span>
-                                <span className="font-mono font-bold text-white/40 text-sm line-through">Rs {Number(product.price).toFixed(2)}</span>
+                              <div className="flex items-baseline gap-1.5 sm:gap-2 truncate">
+                                <span className="font-mono font-bold text-purple-400 text-xs sm:text-lg">Rs {Number(product.salePrice).toFixed(0)}</span>
+                                <span className="font-mono font-bold text-white/40 text-[9px] sm:text-sm line-through">Rs {Number(product.price).toFixed(0)}</span>
                               </div>
                             ) : (
-                              <span className="font-mono font-bold text-cyan-400 text-lg truncate">Rs {Number(product.price).toFixed(2)}</span>
+                              <span className="font-mono font-bold text-cyan-400 text-xs sm:text-lg truncate">Rs {Number(product.price).toFixed(0)}</span>
                             )}
                           </div>
-                          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-400 group-hover:text-black transition-colors text-white/30 text-sm">
+                          <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-400 group-hover:text-black transition-colors text-white/30 text-[10px] sm:text-sm">
                             &rarr;
                           </div>
                         </div>
@@ -182,80 +186,6 @@ export default function Home() {
                     </motion.div>
                   </Link>
                 ))}
-              </div>
-
-              {/* Mobile/Tablet Fanned Cards View ("King Queen") */}
-              <div className="flex lg:hidden relative h-[400px] sm:h-[500px] w-[280px] sm:w-[350px] mx-auto justify-center items-center mt-6 mb-12">
-                {trending.map((product, index) => {
-                  let rotate = 0; let xOffset = '0%'; let yOffset = 0; let zIndex = 10;
-                  if (trending.length === 3) {
-                    rotate = index === 0 ? -12 : index === 2 ? 12 : 0;
-                    xOffset = index === 0 ? '-20%' : index === 2 ? '20%' : '0%';
-                    yOffset = index === 1 ? 0 : 20;
-                    zIndex = index === 1 ? 30 : index === 0 ? 20 : 10;
-                  } else if (trending.length === 2) {
-                    rotate = index === 0 ? -8 : 8;
-                    xOffset = index === 0 ? '-10%' : '10%';
-                    yOffset = 10;
-                    zIndex = index === 0 ? 20 : 10;
-                  }
-
-                  return (
-                    <motion.div
-                      key={product.id}
-                      initial={{ rotate, x: xOffset, y: yOffset, scale: 0.95, zIndex }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      whileHover={{
-                        rotate: index === 0 ? -4 : index === 2 ? 4 : 0,
-                        y: -30,
-                        scale: 1.05,
-                        zIndex: 40
-                      }}
-                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      className="absolute w-[180px] sm:w-[280px] h-[300px] sm:h-[420px] bg-[#050505] border border-white/10 hover:border-cyan-400/50 rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.8)] flex flex-col group cursor-pointer origin-bottom"
-                    >
-                      <Link href={`/product/${product.id}`} className="flex flex-col h-full w-full relative z-10 pointer-events-auto">
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-400/10 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-cyan-400/30 transition-colors pointer-events-none" />
-
-                        <div className="absolute top-3 left-3 z-20 flex flex-col gap-2">
-                          <span className="bg-cyan-500 text-black text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded shadow-[0_0_15px_rgba(34,211,238,0.5)] w-max">Trending</span>
-                          {isOnSale(product) && <span className="bg-purple-500 text-black text-[8px] sm:text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded shadow-[0_0_15px_rgba(168,85,247,0.5)] w-max">SALE</span>}
-                        </div>
-
-                        <div className="relative h-[60%] w-full bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center p-4">
-                          <Image src={getImageUrl(product.images?.[0])} alt={product.name} fill sizes="(max-width: 1024px) 50vw, 33vw" className="object-contain filter drop-shadow-2xl group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500 p-4" />
-                        </div>
-
-                        <div className="relative z-20 flex-1 bg-black/80 backdrop-blur-md border-t border-white/5 p-4 flex flex-col justify-between">
-                          <div>
-                            <h3 className="text-sm sm:text-base font-black truncate text-white group-hover:text-cyan-400 transition-colors">{product.name}</h3>
-                            <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                              {product.brand && <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-[#888]">{product.brand}</span>}
-                              {product.tier && <span className="text-[8px] sm:text-[9px] font-bold uppercase text-purple-400 border border-purple-500/30 bg-purple-500/10 px-1 py-0.5 rounded">{product.tier}</span>}
-                              {product.colors && product.colors.length > 0 && <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 px-1 py-0.5 rounded truncate max-w-[80px]">{product.colors.join(' / ')}</span>}
-                            </div>
-                          </div>
-                          <div className="flex justify-between items-end mt-2">
-                            <div className="flex flex-col items-start max-w-[80%]">
-                              {isOnSale(product) ? (
-                                <div className="flex items-baseline gap-1.5 truncate">
-                                  <span className="font-mono font-bold text-purple-400 text-xs sm:text-sm">Rs {Number(product.salePrice).toFixed(2)}</span>
-                                  <span className="font-mono font-bold text-white/40 text-[9px] sm:text-[10px] line-through">Rs {Number(product.price).toFixed(2)}</span>
-                                </div>
-                              ) : (
-                                <span className="font-mono font-bold text-cyan-400 text-xs sm:text-sm truncate">Rs {Number(product.price).toFixed(2)}</span>
-                              )}
-                            </div>
-                            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-cyan-400 group-hover:text-black transition-colors text-white/30 text-[10px] sm:text-xs">
-                              &rarr;
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  )
-                })}
               </div>
             </>
           )}
