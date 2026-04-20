@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { isOnSale } from '@/utils/sale';
+import ShoeLoader from '@/components/ShoeLoader';
 
 function ShopContent() {
   const searchParams = useSearchParams();
@@ -242,7 +243,7 @@ function ShopContent() {
         {/* Product Grid */}
         <div className="col-span-1 md:col-span-3">
           {isLoading ? (
-            <div className="flex items-center justify-center h-64 text-cyan-400 font-mono animate-pulse">Loading Database...</div>
+            <ShoeLoader />
           ) : filteredProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-64">
               <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 opacity-50">
@@ -318,7 +319,7 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center h-screen text-cyan-400 font-mono animate-pulse">Loading Deep Links...</div>}>
+    <Suspense fallback={<ShoeLoader />}>
       <ShopContent />
     </Suspense>
   );

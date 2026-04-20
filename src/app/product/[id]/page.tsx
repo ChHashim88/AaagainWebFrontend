@@ -9,6 +9,7 @@ import { useCartStore } from '@/store/useCartStore';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { isOnSale } from '@/utils/sale';
+import ShoeLoader from '@/components/ShoeLoader';
 
 export default function ProductPage() {
   const params = useParams();
@@ -81,7 +82,7 @@ export default function ProductPage() {
     });
   };
 
-  if (isLoading) return <div className="min-h-screen flex items-center justify-center text-cyan-400 animate-pulse">Loading Database...</div>;
+  if (isLoading) return <ShoeLoader />;
   if (!product) return <div className="min-h-screen flex items-center justify-center text-red-500">Product not found.</div>;
 
   const displayImages = product.images?.length > 0 ? product.images : [null];
