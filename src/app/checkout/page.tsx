@@ -109,7 +109,7 @@ export default function CheckoutPage() {
     // Assign back the sanitized phone to the address object to keep the DB clean
     setShippingAddress({...shippingAddress, phone: sanitizedPhone});
 
-    if ((paymentMethod === 'Easypaisa' || paymentMethod === 'JazzCash') && !transactionId) {
+    if ((paymentMethod === 'Easypaisa' || paymentMethod === 'JazzCash' || paymentMethod === 'BankTransfer') && !transactionId) {
       toast.error(`Please enter your ${paymentMethod} Transaction ID (TID) to verify payment.`);
       return;
     }
@@ -193,17 +193,39 @@ export default function CheckoutPage() {
               <h2 className="text-xl font-bold uppercase tracking-wider pb-4 mb-6 border-b border-white/10">2. Payment Method</h2>
               <div className="flex flex-col gap-4 bg-black/20 p-6 rounded-2xl border border-white/5">
                 
-                <label className={`relative flex cursor-pointer rounded-xl border p-5 focus:outline-none transition-colors ${paymentMethod === 'COD' ? 'border-cyan-400 bg-cyan-400/10' : 'border-white/10 hover:border-white/30 bg-white/5'}`}>
-                  <input type="radio" className="sr-only" name="paymentMethod" value="COD" checked={paymentMethod === 'COD'} onChange={(e) => setPaymentMethod(e.target.value)} />
-                  <div className="flex w-full items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentMethod === 'COD' ? 'border-cyan-400' : 'border-white/30'}`}>
-                        {paymentMethod === 'COD' && <div className="w-2.5 h-2.5 rounded-full bg-cyan-400" />}
+                {settings?.enableCod !== false && (
+                  <label className={`relative flex cursor-pointer rounded-xl border p-5 focus:outline-none transition-colors ${paymentMethod === 'COD' ? 'border-cyan-400 bg-cyan-400/10' : 'border-white/10 hover:border-white/30 bg-white/5'}`}>
+                    <input type="radio" className="sr-only" name="paymentMethod" value="COD" checked={paymentMethod === 'COD'} onChange={(e) => setPaymentMethod(e.target.value)} />
+                    <div className="flex w-full items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentMethod === 'COD' ? 'border-cyan-400' : 'border-white/30'}`}>
+                          {paymentMethod === 'COD' && <div className="w-2.5 h-2.5 rounded-full bg-cyan-400" />}
+                        </div>
+                        <span className="font-bold uppercase tracking-wider">Cash on Delivery (COD)</span>
                       </div>
-                      <span className="font-bold uppercase tracking-wider">Cash on Delivery (COD)</span>
                     </div>
-                  </div>
-                </label>
+                  </label>
+                )}
+
+                {settings?.enableBank && (
+                  <label className={`relative flex flex-col cursor-pointer rounded-xl border p-5 focus:outline-none transition-colors ${paymentMethod === 'BankTransfer' ? 'border-purple-400 bg-purple-400/10' : 'border-white/10 hover:border-white/30 bg-white/5'}`}>
+                    <div className="flex w-full items-center">
+                      <input type="radio" className="sr-only" name="paymentMethod" value="BankTransfer" checked={paymentMethod === 'BankTransfer'} onChange={(e) => setPaymentMethod(e.target.value)} />
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${paymentMethod === 'BankTransfer' ? 'border-purple-400' : 'border-white/30'}`}>
+                          {paymentMethod === 'BankTransfer' && <div className="w-2.5 h-2.5 rounded-full bg-purple-400" />}
+                        </div>
+                        <span className="font-bold uppercase tracking-wider text-purple-400">Bank Transfer ({settings?.bankName || 'Custom Bank'})</span>
+                      </div>
+                    </div>
+                    {paymentMethod === 'BankTransfer' && (
+                      <div className="mt-4 pl-8 animate-in fade-in slide-in-from-top-2">
+                        <p className="text-sm text-muted-foreground mb-3">Please transfer <strong className="text-white">Rs {totalPrice.toFixed(2)}</strong> to <strong>{settings?.bankName || 'Bank'}</strong> (Account: <strong className="text-white tracking-wider">{settings?.bankAccountNumber || 'N/A'}</strong>)</p>
+                        <input type="text" placeholder="Enter Bank TID (Transaction ID)" value={transactionId} onChange={e => setTransactionId(e.target.value)} className="w-full bg-black/50 border border-purple-500/30 rounded-lg px-4 py-3 text-sm focus:border-purple-400 outline-none" />
+                      </div>
+                    )}
+                  </label>
+                )}
 
                 {settings?.enableEasypaisa && (
                   <label className={`relative flex flex-col cursor-pointer rounded-xl border p-5 focus:outline-none transition-colors ${paymentMethod === 'Easypaisa' ? 'border-green-400 bg-green-400/10' : 'border-white/10 hover:border-white/30 bg-white/5'}`}>

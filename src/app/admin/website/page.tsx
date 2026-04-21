@@ -25,6 +25,10 @@ export default function WebsiteHandlePage() {
   const [sizeSystem, setSizeSystem] = useState<string>('UK');
   
   // Local Payment Gateways
+  const [enableCod, setEnableCod] = useState(true);
+  const [enableBank, setEnableBank] = useState(false);
+  const [bankName, setBankName] = useState('');
+  const [bankAccountNumber, setBankAccountNumber] = useState('');
   const [enableEasypaisa, setEnableEasypaisa] = useState(true);
   const [easypaisaNumber, setEasypaisaNumber] = useState('');
   const [enableJazzcash, setEnableJazzcash] = useState(true);
@@ -65,6 +69,10 @@ export default function WebsiteHandlePage() {
       setCodFeeType(data.codFeeType || 'FIXED');
       setCodFeeValue(data.codFeeValue || 0);
       setSizeSystem(data.sizeSystem || 'UK');
+      setEnableCod(data.enableCod !== false);
+      setEnableBank(data.enableBank === true);
+      setBankName(data.bankName || 'Meezan Bank');
+      setBankAccountNumber(data.bankAccountNumber || '');
       setEnableEasypaisa(data.enableEasypaisa !== false);
       setEasypaisaNumber(data.easypaisaNumber || '');
       setEnableJazzcash(data.enableJazzcash !== false);
@@ -119,6 +127,10 @@ export default function WebsiteHandlePage() {
           codFeeType,
           codFeeValue,
           sizeSystem,
+          enableCod,
+          enableBank,
+          bankName,
+          bankAccountNumber,
           enableEasypaisa,
           easypaisaNumber,
           enableJazzcash,
@@ -329,6 +341,56 @@ export default function WebsiteHandlePage() {
         
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8">
           
+          <div className={`space-y-4 p-4 sm:p-5 rounded-xl border transition-colors ${enableCod ? 'bg-cyan-500/10 border-cyan-500/50' : 'bg-white/5 border-white/10'}`}>
+            <div className="flex items-center justify-between">
+              <h4 className="font-bold text-cyan-400 uppercase tracking-wider text-sm flex items-center gap-2">
+                Cash on Delivery (COD)
+                {!enableCod && <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded uppercase tracking-widest">Disabled</span>}
+              </h4>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" className="sr-only peer" checked={enableCod} onChange={(e) => setEnableCod(e.target.checked)} />
+                <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cyan-500"></div>
+              </label>
+            </div>
+          </div>
+
+          <div className={`space-y-4 p-4 sm:p-5 rounded-xl border transition-colors ${enableBank ? 'bg-purple-500/10 border-purple-500/50' : 'bg-white/5 border-white/10'}`}>
+            <div className="flex items-center justify-between">
+              <h4 className="font-bold text-purple-400 uppercase tracking-wider text-sm flex items-center gap-2">
+                Custom Bank Transfer
+                {!enableBank && <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded uppercase tracking-widest">Disabled</span>}
+              </h4>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" className="sr-only peer" checked={enableBank} onChange={(e) => setEnableBank(e.target.checked)} />
+                <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div>
+              </label>
+            </div>
+            {enableBank && (
+              <div className="mt-2 text-sm text-foreground space-y-3">
+                 <div>
+                   <p className="text-muted-foreground text-xs font-medium mb-1">Bank Name:</p>
+                   <input 
+                     type="text" 
+                     value={bankName} 
+                     onChange={(e) => setBankName(e.target.value)}
+                     className="w-full bg-black border border-purple-500/30 rounded-lg px-4 py-3 text-sm focus:border-purple-400 outline-none text-white font-mono"
+                     placeholder="e.g. Meezan Bank, HBL"
+                   />
+                 </div>
+                 <div>
+                   <p className="text-muted-foreground text-xs font-medium mb-1">Bank Account / IBAN:</p>
+                   <input 
+                     type="text" 
+                     value={bankAccountNumber} 
+                     onChange={(e) => setBankAccountNumber(e.target.value)}
+                     className="w-full bg-black border border-purple-500/30 rounded-lg px-4 py-3 text-sm focus:border-purple-400 outline-none text-white font-mono"
+                     placeholder="e.g. PK35MEZN..."
+                   />
+                 </div>
+              </div>
+            )}
+          </div>
+
           <div className={`space-y-4 p-4 sm:p-5 rounded-xl border transition-colors ${enableEasypaisa ? 'bg-green-500/10 border-green-500/50' : 'bg-white/5 border-white/10'}`}>
             <div className="flex items-center justify-between">
               <h4 className="font-bold text-green-400 uppercase tracking-wider text-sm flex items-center gap-2">
