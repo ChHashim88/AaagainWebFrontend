@@ -7,11 +7,13 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { isOnSale } from '@/utils/sale';
+import ShoeLoader from '@/components/ShoeLoader';
 
 export default function Home() {
   const [trending, setTrending] = useState<any[]>([]);
   const [menShoes, setMenShoes] = useState<any[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -44,8 +46,9 @@ export default function Home() {
       }
     };
 
-    fetchTrending();
-    fetchBrands();
+    Promise.all([fetchTrending(), fetchBrands()]).finally(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   const getImageUrl = (url: string | undefined) => {
@@ -121,7 +124,9 @@ export default function Home() {
         <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 text-center">
           <h2 className="text-3xl font-bold tracking-tight mb-12 uppercase border-b border-border/50 inline-block pb-2">Trending Models</h2>
 
-          {trending.length === 0 ? (
+          {isLoading ? (
+            <ShoeLoader />
+          ) : trending.length === 0 ? (
             <p className="text-muted-foreground">Store empty. Check back when admin adds sneakers!</p>
           ) : (
             <>
@@ -205,7 +210,9 @@ export default function Home() {
             </Link>
           </div>
 
-          {menShoes.length === 0 ? (
+          {isLoading ? (
+            <ShoeLoader />
+          ) : menShoes.length === 0 ? (
             <p className="text-muted-foreground">No Men's shoes available at the moment.</p>
           ) : (
             <div className="relative group/slider">
@@ -408,7 +415,11 @@ export default function Home() {
               </Link>
             ))}
           </div>
-          {brands.length === 0 && <p className="text-muted-foreground text-sm">No brands currently listed.</p>}
+          {isLoading ? (
+            <div className="mt-12"><ShoeLoader /></div>
+          ) : brands.length === 0 && (
+            <p className="text-muted-foreground text-sm mt-8">No brands currently listed.</p>
+          )}
         </div>
       </section>
 
