@@ -14,6 +14,7 @@ export default function Home() {
   const [menShoes, setMenShoes] = useState<any[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -32,8 +33,9 @@ export default function Home() {
         setTrending(explicitTrending.length > 0 ? explicitTrending.slice(0, 3) : data.slice(0, 3));
         const menFiltered = data.filter((p: any) => p.category?.name === 'Men' || p.category?.name === 'Unisex');
         setMenShoes(menFiltered.slice(0, 6));
-      } catch (error) {
-        console.error('Failed to fetch trending products');
+      } catch (error: any) {
+        console.error('Failed to fetch trending products:', error);
+        setErrorMsg(error.message || 'Failed to fetch products');
       }
     };
 
@@ -41,8 +43,9 @@ export default function Home() {
       try {
         const { data } = await axios.get((process.env.NEXT_PUBLIC_API_URL || 'https://api.bazarbeats.com') + '/api/brands');
         setBrands(data);
-      } catch (error) {
-        console.error('Failed to fetch brands');
+      } catch (error: any) {
+        console.error('Failed to fetch brands:', error);
+        setErrorMsg(error.message || 'Failed to fetch brands');
       }
     };
 
@@ -126,6 +129,12 @@ export default function Home() {
 
           {isLoading ? (
             <ShoeLoader />
+          ) : errorMsg ? (
+            <div className="bg-red-500/10 border border-red-500/50 p-6 rounded-2xl max-w-2xl mx-auto backdrop-blur-sm">
+              <h3 className="text-red-400 font-bold mb-2">Failed to connect to backend server:</h3>
+              <p className="text-muted-foreground font-mono text-sm">{errorMsg}</p>
+              <p className="text-muted-foreground mt-4 text-xs">If you see this error on a Hostinger deployment, ensure your Node.js Passenger configuration contains a `public` directory, a `.htaccess` file, and your server IP is whitelisted in MongoDB Atlas.</p>
+            </div>
           ) : trending.length === 0 ? (
             <p className="text-muted-foreground">Store empty. Check back when admin adds sneakers!</p>
           ) : (
