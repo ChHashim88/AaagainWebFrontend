@@ -8,13 +8,15 @@ import { useCartStore } from '@/store/useCartStore';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Suspense } from 'react';
 import { isOnSale } from '@/utils/sale';
 import ShoeLoader from '@/components/ShoeLoader';
 
 function ShopContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +32,19 @@ function ShopContent() {
 
   const availableBrands = Array.from(new Set(products.map(p => p.brand).filter(Boolean))) as string[];
   const availableTiers = Array.from(new Set(products.map(p => p.tier).filter(Boolean))) as string[];
+
+  // Helper to update URL without refreshing
+  const updateUrlParam = (key: string, value: string | null) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    if (value) {
+      current.set(key, value);
+    } else {
+      current.delete(key);
+    }
+    const search = current.toString();
+    const query = search ? `?${search}` : '';
+    router.replace(`${pathname}${query}`, { scroll: false });
+  };
 
   useEffect(() => {
     // 1. Process Category deep links
@@ -103,9 +118,25 @@ function ShopContent() {
     toast.success(`${product.name} added to cart`);
   };
 
+  const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    setSelectedBrand(val);
+    updateUrlParam('brand', val || null);
+  };
+
+  const handleTierChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    setSelectedTier(val);
+    updateUrlParam('tier', val || null);
+  };
 
   const handleCategoryToggle = (category: string) => {
-    setSelectedCategories(prev => prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]);
+    const newCategories = selectedCategories.includes(category) 
+      ? selectedCategories.filter(c => c !== category) 
+      : [...selectedCategories, category];
+      
+    setSelectedCategories(newCategories);
+    updateUrlParam('category', newCategories.length > 0 ? newCategories[0] : null);
   };
 
   const handleSizeToggle = (size: string) => {
@@ -167,7 +198,7 @@ function ShopContent() {
             <h3 className="font-bold uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Brand</h3>
             <select
               value={selectedBrand}
-              onChange={(e) => setSelectedBrand(e.target.value)}
+              onChange={handleBrandChange}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-cyan-400 appearance-none text-sm"
             >
               <option value="" className="bg-black text-muted-foreground">All Brands</option>
@@ -181,7 +212,7 @@ function ShopContent() {
             <h3 className="font-bold uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Quality Tier</h3>
             <select
               value={selectedTier}
-              onChange={(e) => setSelectedTier(e.target.value)}
+              onChange={handleTierChange}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-purple-400 appearance-none text-sm"
             >
               <option value="" className="bg-black text-muted-foreground">All Tiers</option>
