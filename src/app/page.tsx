@@ -74,7 +74,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-5xl md:text-7xl font-black tracking-tighter leading-tight uppercase"
           >
-            THE FINEST <br /> PRE-OWNED <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">FOOTWEAR</span>
+            THE FINEST <br /> AUTHENTIC <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">SNEAKERS</span>
           </motion.h1>
 
           <motion.p
@@ -429,6 +429,21 @@ export default function Home() {
           ) : brands.length === 0 && (
             <p className="text-muted-foreground text-sm mt-8">No brands currently listed.</p>
           )}
+        </div>
+      </section>
+
+      {/* SEO Text Block */}
+      <section className="w-full bg-black/50 py-16 border-t border-white/5">
+        <div className="w-full max-w-[1200px] mx-auto px-6 sm:px-12 text-center md:text-left">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-4 uppercase text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+            Buy Premium Authentic Sneakers & Footwear Online
+          </h2>
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4">
+            Welcome to Bazar Beats, your premier destination to buy the most exclusive, high-end, and authentic sneakers online. Whether you are searching for limited edition drops, trending sports shoes, or everyday premium footwear, our curated collection is engineered to elevate your style. We pride ourselves on offering meticulously authenticated shoes from the world's most desired brands, including Nike, Adidas, New Balance, Asics, and more.
+          </p>
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+            From the latest basketball sneakers and performance running shoes to iconic streetwear silhouettes, Bazar Beats bridges the gap between luxury quality and unmatched accessibility. Experience fast delivery, a seamless shopping experience, and the confidence that comes with wearing 100% genuine products. Step into the future of footwear today.
+          </p>
         </div>
       </section>
 
