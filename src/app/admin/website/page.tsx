@@ -23,6 +23,7 @@ export default function WebsiteHandlePage() {
   const [codFeeType, setCodFeeType] = useState<'FIXED' | 'PERCENTAGE'>('FIXED');
   const [codFeeValue, setCodFeeValue] = useState<number>(0);
   const [sizeSystem, setSizeSystem] = useState<string>('UK');
+  const [defaultSortOption, setDefaultSortOption] = useState<string>('newest');
   
   // Local Payment Gateways
   const [enableCod, setEnableCod] = useState(true);
@@ -69,6 +70,7 @@ export default function WebsiteHandlePage() {
       setCodFeeType(data.codFeeType || 'FIXED');
       setCodFeeValue(data.codFeeValue || 0);
       setSizeSystem(data.sizeSystem || 'UK');
+      setDefaultSortOption(data.defaultSortOption || 'newest');
       setEnableCod(data.enableCod !== false);
       setEnableBank(data.enableBank === true);
       setBankName(data.bankName || 'Meezan Bank');
@@ -127,6 +129,7 @@ export default function WebsiteHandlePage() {
           codFeeType,
           codFeeValue,
           sizeSystem,
+          defaultSortOption,
           enableCod,
           enableBank,
           bankName,
@@ -329,6 +332,24 @@ export default function WebsiteHandlePage() {
               </select>
             </div>
             <p className="text-xs text-muted-foreground font-medium">Prefix added to product sizes (e.g. "UK 10").</p>
+          </div>
+
+          <div className="space-y-4 bg-white/5 p-4 sm:p-5 rounded-xl border border-white/10">
+            <h4 className="font-bold text-cyan-400 uppercase tracking-wider text-sm">Global Store Sorting</h4>
+            <div className="flex gap-4">
+              <select 
+                value={defaultSortOption} 
+                onChange={(e) => setDefaultSortOption(e.target.value)}
+                className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-sm outline-none w-full focus:border-cyan-400 text-white font-bold"
+              >
+                <option value="newest">Newest First (Chronological)</option>
+                <option value="oldest">Oldest First (Archive)</option>
+                <option value="price_asc">Price (Low to High)</option>
+                <option value="price_desc">Price (High to Low)</option>
+                <option value="name_asc">Alphabetical (A to Z)</option>
+              </select>
+            </div>
+            <p className="text-xs text-muted-foreground font-medium">Defines the default arrangement of products on the Shop page.</p>
           </div>
 
         </div>

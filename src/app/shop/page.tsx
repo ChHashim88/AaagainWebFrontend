@@ -28,7 +28,6 @@ function ShopContent() {
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [selectedTier, setSelectedTier] = useState<string>('');
   const [showOnlySale, setShowOnlySale] = useState<boolean>(false);
-  const [sortOrder, setSortOrder] = useState<string>('');
 
   const availableBrands = Array.from(new Set(products.map(p => p.brand).filter(Boolean))) as string[];
   const availableTiers = Array.from(new Set(products.map(p => p.tier).filter(Boolean))) as string[];
@@ -76,13 +75,6 @@ function ShopContent() {
       setShowOnlySale(true);
     } else {
       setShowOnlySale(false);
-    }
-
-    // 5. Process Sort deep link
-    if (searchParams.get('sort') === 'new') {
-      setSortOrder('new');
-    } else {
-      setSortOrder('');
     }
   }, [searchParams]);
 
@@ -156,10 +148,6 @@ function ShopContent() {
     const matchesSale = !showOnlySale || isOnSale(p);
     return matchesSearch && matchesCategory && matchesPrice && matchesSize && matchesBrand && matchesTier && matchesSale;
   });
-
-  if (sortOrder === 'new') {
-    filteredProducts = filteredProducts.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
-  }
 
   return (
     <div className="w-full max-w-[1800px] mx-auto px-6 sm:px-12 lg:px-16 pt-6 pb-12">
