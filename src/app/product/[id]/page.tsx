@@ -24,6 +24,8 @@ export default function ProductPage() {
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState('10');
   const [sizeSystem, setSizeSystem] = useState('');
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -237,16 +239,32 @@ export default function ProductPage() {
             <X className="w-6 h-6" />
           </button>
 
-          <div className="relative w-full max-w-6xl h-[70vh] flex items-center justify-center">
+          <div 
+            className="relative w-full max-w-6xl h-[70vh] flex items-center justify-center cursor-pointer"
+            onTouchStart={(e) => {
+              setTouchEnd(null);
+              setTouchStart(e.targetTouches[0].clientX);
+            }}
+            onTouchMove={(e) => setTouchEnd(e.targetTouches[0].clientX)}
+            onTouchEnd={() => {
+              if (touchStart === null || touchEnd === null) return;
+              const distance = touchStart - touchEnd;
+              if (distance > 50) {
+                setActiveImage(prev => prev === displayImages.length - 1 ? 0 : prev + 1);
+              } else if (distance < -50) {
+                setActiveImage(prev => prev === 0 ? displayImages.length - 1 : prev - 1);
+              }
+            }}
+          >
             {displayImages.length > 1 && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setActiveImage(prev => prev === 0 ? displayImages.length - 1 : prev - 1);
                 }}
-                className="absolute left-0 md:left-4 p-4 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all z-[110] backdrop-blur-md shadow-2xl"
+                className="absolute left-2 md:left-4 p-2 text-white/50 hover:text-white transition-all z-[110] drop-shadow-md"
               >
-                <ChevronLeft className="w-8 h-8" />
+                <ChevronLeft className="w-8 h-8 md:w-12 md:h-12" />
               </button>
             )}
 
@@ -265,9 +283,9 @@ export default function ProductPage() {
                   e.stopPropagation();
                   setActiveImage(prev => prev === displayImages.length - 1 ? 0 : prev + 1);
                 }}
-                className="absolute right-0 md:right-4 p-4 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all z-[110] backdrop-blur-md shadow-2xl"
+                className="absolute right-2 md:right-4 p-2 text-white/50 hover:text-white transition-all z-[110] drop-shadow-md"
               >
-                <ChevronRight className="w-8 h-8" />
+                <ChevronRight className="w-8 h-8 md:w-12 md:h-12" />
               </button>
             )}
           </div>
