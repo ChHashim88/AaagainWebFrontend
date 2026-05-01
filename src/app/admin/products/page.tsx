@@ -368,7 +368,7 @@ export default function AdminProducts() {
                   <div className="mb-8">
                     <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-3 block">Enable Sizes</label>
                     <div className="flex gap-2 flex-wrap">
-                      {['6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'].map(size => (
+                      {['5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'].map(size => (
                         <div
                           key={size}
                           onClick={() => toggleSize(size)}

@@ -335,6 +335,8 @@ export default function ProductPage() {
                   </thead>
                   <tbody>
                     {[
+                      { us: "5 / 6.5", uk: "4.5", eu: "37.5", cm: "23" },
+                      { us: "5.5 / 7", uk: "5", eu: "38", cm: "23.5" },
                       { us: "6 / 7.5", uk: "5.5", eu: "38.5", cm: "24" },
                       { us: "6.5 / 8", uk: "6", eu: "39", cm: "24.5" },
                       { us: "7 / 8.5", uk: "6", eu: "40", cm: "25" },

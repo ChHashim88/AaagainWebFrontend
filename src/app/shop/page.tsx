@@ -246,7 +246,7 @@ function ShopContent() {
           <div className="mb-8">
             <h3 className="font-bold uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Size</h3>
             <div className="grid grid-cols-3 gap-2">
-              {['6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'].map(size => (
+              {['5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'].map(size => (
                 <div
                   key={size}
                   onClick={() => handleSizeToggle(size)}
